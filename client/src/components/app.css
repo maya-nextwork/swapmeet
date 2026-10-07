@@ -1,0 +1,161 @@
+/* App layout and the app's own components. Plain CSS against tokens.css,
+   so it renders the same with or without Tailwind. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, p { margin: 0; }
+
+a { color: var(--primary); }
+
+:focus-visible { outline: var(--outline) solid var(--primary); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* --- header --------------------------------------------------------------- */
+.sm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding: var(--space-4) var(--space-6);
+  background: var(--surface);
+  border-bottom: var(--outline) solid var(--line-strong);
+}
+.sm-brand {
+  font-family: var(--font-display);
+  font-stretch: 87%;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-decoration: none;
+}
+.sm-header-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+/* --- page ----------------------------------------------------------------- */
+.sm-main { max-width: 1120px; margin: 0 auto; padding: var(--space-8) var(--space-6) var(--space-12); }
+.sm-page-title { font-stretch: 87%; margin-bottom: var(--space-2); }
+.sm-soft { color: var(--text-soft); }
+.sm-error {
+  margin: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  border: var(--hairline) solid var(--danger);
+  border-left-width: 6px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+}
+.sm-empty { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+
+@media (max-width: 600px) {
+  .sm-header { padding: var(--space-3) var(--space-4); }
+  .sm-main { padding: var(--space-6) var(--space-4) var(--space-12); }
+}
+
+/* --- category filter ------------------------------------------------------ */
+.sm-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-6) 0;
+  padding: var(--space-3);
+  background: var(--panel);
+  border-radius: var(--radius-lg);
+}
+.sm-pill {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: var(--hairline) solid var(--line-strong);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+.sm-pill[aria-pressed="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+  font-weight: 700;
+}
+
+/* --- grid ----------------------------------------------------------------- */
+.sm-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-6);
+}
+.sm-card-link { display: block; height: 100%; color: inherit; text-decoration: none; border-radius: var(--radius-md); }
+.sm-card { max-width: none; height: 100%; }
+.sm-card-link:hover .sm-card { border-color: var(--line-strong); }
+
+/* --- detail --------------------------------------------------------------- */
+.sm-detail { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: var(--space-8); align-items: start; }
+.sm-detail-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  font-size: 120px;
+  background: var(--panel);
+  border: var(--outline) solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.sm-detail-body { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+.sm-price { font-stretch: 87%; }
+.sm-facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-2) var(--space-6);
+  margin: 0;
+  font-size: 15px;
+}
+.sm-facts dt { color: var(--text-soft); font-weight: 600; }
+.sm-facts dd { margin: 0; display: flex; align-items: center; gap: 4px; }
+
+@media (max-width: 760px) {
+  .sm-detail { grid-template-columns: 1fr; }
+}
+
+/* --- form ----------------------------------------------------------------- */
+.sm-form-wrap { max-width: 640px; }
+.sm-form { display: flex; flex-direction: column; gap: var(--space-5); margin-top: var(--space-6); }
+.sm-field { display: flex; flex-direction: column; gap: 6px; }
+.sm-label { font-weight: 700; font-size: 15px; }
+.sm-hint { font-weight: 400; color: var(--text-soft); }
+.sm-input {
+  font: inherit;
+  font-size: 16px;
+  padding: 10px 12px;
+  color: var(--text);
+  background: var(--surface);
+  border: var(--hairline) solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  width: 100%;
+}
+.sm-input-short { max-width: 120px; }
+.sm-input[aria-invalid="true"] { border-color: var(--danger); border-width: var(--outline); }
+.sm-field-error { color: var(--danger); font-size: 15px; font-weight: 600; }
+.sm-field-error::before { content: "⚠ "; }
+.sm-form-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+:root[data-theme="dark"] .sm-field-error { color: #ff8a7a; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sm-field-error { color: #ff8a7a; }
+}

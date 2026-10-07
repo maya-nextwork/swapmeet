@@ -1,0 +1,172 @@
+/* Swapmeet design system — compiled tokens (Day = default, Night = dark)
+   Import once, then use var(--token). Toggle themes with data-theme="dark"/"light"
+   on <html>; with no attribute it follows the OS setting.
+   Fonts are Google-hosted — add this to your <head>:
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap">
+*/
+
+:root, :root[data-theme="light"] {
+  --cream: #fffaf2;
+  --ink: #1e2323;
+  --teal: #087f8c;
+  --leaf: #3f6f4e;
+  --marigold: #f4ad00;
+  --tomato: #e8492d;
+  --denim: #1f6f9b;
+  --raspberry: #c83270;
+  --oat: #f1dfc4;
+  --danger: #a3231a;
+  --bg: #fffaf2;
+  --surface: #ffffff;
+  --panel: #f1dfc4;
+  --text: #1e2323;
+  --text-soft: #5a5450;
+  --line: #e3cfa9;
+  --line-strong: #1e2323;
+  --primary: #087f8c;
+  --secondary: #3f6f4e;
+  --accent: #f4ad00;
+  --hot: #e8492d;
+  --info: #1f6f9b;
+  --play: #c83270;
+  --on-primary: #ffffff;
+  --on-secondary: #ffffff;
+  --on-accent: #1e2323;
+  --on-info: #ffffff;
+  --on-hot: #ffffff;
+  --on-play: #ffffff;
+  --on-danger: #ffffff;
+  --on-ink: #fff5e6;
+  --shadow-card: 0 1px 0 rgba(30,35,35,.05), 0 10px 22px -14px rgba(30,35,35,.35);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --radius-sm: 8px;
+  --radius-md: 13px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+  --outline: 2.5px;
+  --hairline: 1.5px;
+
+  --font-display: "Archivo", system-ui, -apple-system, sans-serif;
+  --font-sans: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, -apple-system, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --ink: #8a9e9e;
+  --bg: #191d1d;
+  --surface: #23292a;
+  --panel: #2c3131;
+  --text: #fff5e6;
+  --text-soft: #b9b4ac;
+  --line: #3a4141;
+  --line-strong: #5a6363;
+  --primary: #17a6b4;
+  --secondary: #5fa074;
+  --accent: #f4ad00;
+  --hot: #f26244;
+  --info: #3e93c2;
+  --play: #e15a94;
+  --on-ink: #1e2323;
+  --shadow-card: 0 1px 0 rgba(0,0,0,.3), 0 14px 30px -16px rgba(0,0,0,.7);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #8a9e9e;
+    --bg: #191d1d;
+    --surface: #23292a;
+    --panel: #2c3131;
+    --text: #fff5e6;
+    --text-soft: #b9b4ac;
+    --line: #3a4141;
+    --line-strong: #5a6363;
+    --primary: #17a6b4;
+    --secondary: #5fa074;
+    --accent: #f4ad00;
+    --hot: #f26244;
+    --info: #3e93c2;
+    --play: #e15a94;
+    --on-ink: #1e2323;
+    --shadow-card: 0 1px 0 rgba(0,0,0,.3), 0 14px 30px -16px rgba(0,0,0,.7);
+  }
+}
+
+/* Type styles — apply the class, it sets family/size/line-height/weight/tracking */
+.text-display {
+  font-family: var(--font-display);
+  font-size: 56px;
+  line-height: 54px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.text-h1 {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 40px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.text-h2 {
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 34px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.text-h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 28px;
+  font-weight: 600;
+}
+.text-price {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.text-listing-title {
+  font-family: var(--font-sans);
+  font-size: 19px;
+  line-height: 24px;
+  font-weight: 600;
+}
+.text-body {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 26px;
+  font-weight: 400;
+}
+.text-body-sm {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 400;
+}
+.text-label {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+.text-meta {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+.text-button {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 700;
+}
