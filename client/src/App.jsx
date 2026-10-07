@@ -1,49 +1,60 @@
 import { useEffect, useState } from 'react'
+import { getCategories } from './api.js'
+import { Button } from './design-system'
+import Header from './components/Header.jsx'
+import ListingGrid from './components/ListingGrid.jsx'
+import ListingDetail from './components/ListingDetail.jsx'
+import PostListingForm from './components/PostListingForm.jsx'
 
-// v0: SwapMeet works, but it's not pretty. The landing page renders the raw
-// listings payload straight from the API. Turning this into a real listings
-// page is the feature you'll deliver using parallel lanes.
+// Hash routes, no router dependency: #/ grid, #/listings/:id detail, #/sell form.
+function parseHash(hash) {
+  const path = hash.replace(/^#/, '') || '/'
+  if (path === '/') return { name: 'grid' }
+  if (path === '/sell') return { name: 'sell' }
+  const m = path.match(/^\/listings\/([^/]+)$/)
+  if (m) return { name: 'detail', id: decodeURIComponent(m[1]) }
+  return { name: 'missing' }
+}
+
 export default function App() {
-  const [listings, setListings] = useState(null)
-  const [error, setError] = useState(null)
+  const [route, setRoute] = useState(() => parseHash(window.location.hash))
+  const [categories, setCategories] = useState(null)
+  // Lives here so the filter survives a trip to a detail page and back.
+  const [category, setCategory] = useState(null)
 
   useEffect(() => {
-    fetch('/api/listings')
-      .then((res) => {
-        if (!res.ok) throw new Error(`API responded ${res.status}`)
-        return res.json()
-      })
-      .then(setListings)
-      .catch((err) => setError(err.message))
+    const onHash = () => {
+      setRoute(parseHash(window.location.hash))
+      window.scrollTo(0, 0)
+    }
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
+  useEffect(() => {
+    getCategories()
+      .then(setCategories)
+      .catch(() => setCategories([]))
   }, [])
 
   return (
-    <main style={{ fontFamily: 'sans-serif', maxWidth: 900, margin: '2rem auto', padding: '0 1rem' }}>
-      <h1>🛒 SwapMeet</h1>
-      <p>Local listings for people building something.</p>
-
-      {error && <p style={{ color: 'crimson' }}>Failed to load listings: {error}</p>}
-      {!error && !listings && <p>Loading listings…</p>}
-
-      {listings && (
-        <>
-          <p>
-            <strong>{listings.length}</strong> listings live. Raw payload below — your job is to make
-            this beautiful.
-          </p>
-          <pre
-            style={{
-              background: '#f4f4f4',
-              padding: '1rem',
-              borderRadius: 8,
-              overflowX: 'auto',
-              fontSize: 13
-            }}
-          >
-            {JSON.stringify(listings, null, 2)}
-          </pre>
-        </>
-      )}
-    </main>
+    <>
+      <Header route={route} />
+      <main className="sm-main">
+        {route.name === 'grid' && (
+          <ListingGrid categories={categories} category={category} onCategoryChange={setCategory} />
+        )}
+        {route.name === 'detail' && <ListingDetail key={route.id} id={route.id} categories={categories} />}
+        {route.name === 'sell' && <PostListingForm categories={categories} />}
+        {route.name === 'missing' && (
+          <section className="sm-empty">
+            <h1 className="text-h2">Page not found</h1>
+            <Button variant="tertiary" onClick={() => (window.location.hash = '#/')}>
+              Back to listings
+            </Button>
+          </section>
+        )}
+      </main>
+    </>
   )
 }
